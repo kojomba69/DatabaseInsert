@@ -27,6 +27,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setOnClickListener(this);
         Button button1= findViewById(R.id.buttonRead);
         button1.setOnClickListener(this);
+        Button button2= findViewById(R.id.buttonUpdate);
+        button2.setOnClickListener(this);
+        Button button3= findViewById(R.id.buttonDelet);
+        button3.setOnClickListener(this);
     }
 
     @Override
@@ -38,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()){
             case R.id.buttonInsert:
-                mdb.execSQL("INSERT INTO awe_country VALUES(null,'"+countryEditText+"','"+cityEditText+"');");
+                mdb.execSQL("INSERT INTO awe_country VALUES(null,'"+country+"','"+capital+"');");
                 break;
             case R.id.buttonRead:
                 TextView tvResult = (TextView)findViewById(R.id.edit);
@@ -54,9 +58,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tvResult.setText(str);
                 break;
             case R.id.buttonUpdate:
-
+                mdb.execSQL("UPDATE awe_country SET capital='"+capital+"' WHERE country='"+country+"'");
                 break;
+
             case R.id.buttonDelet:
+                mdb.execSQL("DELETE FROM awe_country WHERE country='"+country+"';");
 
                 break;
         }
