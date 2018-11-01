@@ -31,16 +31,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        int id;
-        String country, capital;
+        EditText countryEditText = (EditText)findViewById(R.id.country);
+        String country = countryEditText.getText().toString();
+        EditText cityEditText=(EditText)findViewById(R.id.city);
+        String capital = cityEditText.getText().toString();
 
-        int idid=v.getId();
-        switch (idid){
+        switch (v.getId()){
             case R.id.buttonInsert:
-
+                mdb.execSQL("INSERT INTO awe_country VALUES(null,'"+countryEditText+"','"+cityEditText+"');");
                 break;
             case R.id.buttonRead:
-
+                TextView tvResult = (TextView)findViewById(R.id.edit);
+                String query = "SELECT * FROM awe_country order by _id desc";
+                Cursor cursor = mdb.rawQuery(query,null);
+                String str="";
+                while (cursor.moveToNext()){
+                    int id = cursor.getInt(0);
+                    country = cursor.getString(cursor.getColumnIndex("country"));
+                    capital=cursor.getString(2);
+                    str+=(id+":"+ country +"-"+capital+"\n");
+                }
+                tvResult.setText(str);
                 break;
             case R.id.buttonUpdate:
 
@@ -51,29 +62,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        EditText countryEditText = (EditText)findViewById(R.id.country);
-        country = countryEditText.getText().toString();
-        EditText cityEditText=(EditText)findViewById(R.id.city);
-        capital = cityEditText.getText().toString();
+//        if (str.length()>0){
+//            tvResult.setText(str);
+//        }
+//        else {
+//            Toast.makeText(getApplicationContext(),"Warning Empty DB", Toast.LENGTH_SHORT).show();
+//            tvResult.setText("");
+//        }
+//
 
-        TextView tvResult = (TextView)findViewById(R.id.edit);
-        String query = "SELECT * FROM awe_country";
-        Cursor cursor = mdb.rawQuery(query,null);
-        String str="";
-        while (cursor.moveToNext()){
-            id = cursor.getInt(0);
-            country = cursor.getString(cursor.getColumnIndex("country"));
-            capital=cursor.getString(2);
-            str+=(id+":"+ country +"-"+capital+"\n");
-        }
-        if (str.length()>0){
-            tvResult.setText(str);
-        }
-        else {
-            Toast.makeText(getApplicationContext(),"Warning Empty DB", Toast.LENGTH_SHORT).show();
-            tvResult.setText("");
-        }
-
-        mdb.execSQL("INSERT INTO awe_country VALUES(null,'"+countryEditText+"','"+cityEditText+"');");
     }
 }
