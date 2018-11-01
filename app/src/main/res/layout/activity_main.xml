@@ -42,6 +42,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="INSERT RECORD" />
+
+            <Button
+                android:id="@+id/buttonRead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="READ DATA" />
+
+            <Button
+                android:id="@+id/buttonUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UPDATE RECORD" />
+
+            <Button
+                android:id="@+id/buttonDelet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DELETE RECRD" />
+
+            <TextView
+                android:id="@+id/edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 
