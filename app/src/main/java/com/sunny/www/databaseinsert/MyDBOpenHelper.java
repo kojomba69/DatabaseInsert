@@ -22,6 +22,7 @@ public class MyDBOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE awe_country (_id INTEGER PRIMARY KEY AUTOINCREMENT, country TEXT, capital TEXT);");
 
+
         for(int i=0; i<10; i++){
             db.execSQL("INSERT INTO awe_country VALUES( null, '" + "Country"+ i + "', '" + "Capital" + i + "');");
         }
@@ -32,6 +33,11 @@ public class MyDBOpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE awe_country ;");
         onCreate(db);
 //        Toast.makeText(this.,"onUpgrade", Toast.LENGTH_LONG).show();
+
+        db.execSQL("CREATE TABLE awe_country(pkid TEXT PRIMARY KEY, country TEXT, capital TEXT);");
+        db.execSQL("CREATE TABLE awe_country_visitedcount(fkid TEXT);");
+
+
     }
 
     public void deleteRecord(SQLiteDatabase mdb, String country) {

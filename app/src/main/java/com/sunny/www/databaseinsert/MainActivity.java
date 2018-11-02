@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbHelper = new MyDBOpenHelper(this,"awe.db",null, 1);
+        dbHelper = new MyDBOpenHelper(this,"awe.db",null, 2);
         mdb = dbHelper.getWritableDatabase();
 
         Button button = findViewById(R.id.buttonInsert);
@@ -31,6 +31,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button2.setOnClickListener(this);
         Button button3= findViewById(R.id.buttonDelet);
         button3.setOnClickListener(this);
+        Button button4=findViewById(R.id.buttonSearch);
+        button4.setOnClickListener(this);
+        Button button5= findViewById(R.id.buttonAddVisit);
+        button5.setOnClickListener(this);
     }
 
     @Override
@@ -63,7 +67,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.buttonDelet:
                 mdb.execSQL("DELETE FROM awe_country WHERE country='"+country+"';");
+                break;
 
+            case R.id.buttonAddVisit:
+                TextView textViewPkid = (TextView)findViewById(R.id.textViewPkid);
+                String strPkID=textViewPkid.getText().toString();
+                query="INSERT INTO awe_country_visitedcount VALUES('"+strPkID+"')";
+                mdb.execSQL(query);
+                break;
+
+            case R.id.buttonSearch:
+                country=countryEditText.getText().toString();
+                query="SELECT pkid, country, capital, count(fkid) visitedTotal"+"FROM awe_country INNER JOIN awe_country_visitedcount"+
+                        "ON pkid=fkid AND pkid='"+country+"'";
+                cursor = mdb.rawQuery(query,null);
+                if(cursor.getCount()>0){
+                    cursor.moveToFirst();
+
+                   // visitedTotal = cursor.getInt(cursor.getColumnIndex("visitedTotal"));
+                    //textViewVisToCo.setText(String.valueOf(visitedTotal));
+
+                }
                 break;
         }
 
